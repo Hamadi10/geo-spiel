@@ -1697,6 +1697,12 @@ function startfensterTexte() {
   const ladeHinweis = document.getElementById('lade-hinweis');
   ladeHinweis.textContent = '⏳ ' + t().laden;
   ladeHinweis.classList.toggle('versteckt', geladen);
+  // Tipp "Zum Home-Bildschirm": nur auf iPhone/iPad im Browser (nicht, wenn es schon die App ist)
+  const appTipp = document.getElementById('app-tipp');
+  const istApple = /iPhone|iPad|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+  const istSchonApp = window.navigator.standalone === true || (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+  appTipp.innerHTML = t().appTipp;
+  appTipp.classList.toggle('versteckt', !(istApple && !istSchonApp));
   const box = document.getElementById('spiel-kategorien');
   box.innerHTML = '';
   KATEGORIEN.forEach(([kategorie, spiele]) => {
@@ -2028,3 +2034,8 @@ let gespeicherteSprache = 'de';
 try { gespeicherteSprache = localStorage.getItem('geo-sprache') || 'de'; } catch (e) {}
 spracheSetzen(TEXTE[gespeicherteSprache] ? gespeicherteSprache : 'de');
 seiteZeigen('start');   // beim Öffnen: Startseite
+
+// Als App: Spiel auf dem Gerät speichern (damit es schnell startet und offline läuft)
+if ('serviceWorker' in navigator && location.protocol.startsWith('http')) {
+  window.addEventListener('load', () => navigator.serviceWorker.register('sw.js').catch(() => {}));
+}

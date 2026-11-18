@@ -5,8 +5,18 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <title>Geo-Spiel</title>
 
+  <!-- Als App aufs Handy: Name, Symbol und Farben -->
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" type="image/png" href="icons/favicon.png">
+  <link rel="apple-touch-icon" href="icons/icon-180.png">
+  <meta name="theme-color" content="#000000">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Geo-Spiel">
+
   <!-- Das Aussehen steht in einer eigenen Datei -->
-  <link rel="stylesheet" href="style.css?v=35">
+  <link rel="stylesheet" href="style.css?v=36">
 
   <!-- Das Globus-Werkzeug aus dem Internet -->
   <script src="https://unpkg.com/globe.gl"></script>
@@ -110,6 +120,8 @@
       </div>
       <p id="start-untertitel"></p>
       <p id="lade-hinweis"></p>
+      <!-- Tipp fürs iPhone: Spiel als App auf den Home-Bildschirm legen -->
+      <p id="app-tipp" class="versteckt"></p>
       <!-- Die Spiel-Kärtchen baut spiel.js -->
       <div id="spiel-kategorien"></div>
     </div>
@@ -177,12 +189,12 @@
   </div>
 
   <!-- Erst die Texte, dann die Spiel-Logik -->
-  <script src="gruppen.js?v=35"></script>
-  <script src="meere.js?v=35"></script>
-  <script src="sprachen.js?v=35"></script>
-  <script src="mehrspieler.js?v=35"></script>
-  <script src="spiel.js?v=35"></script>
-  <script src="regionen.js?v=35"></script>
-  <script src="worldle.js?v=35"></script>
+  <script src="gruppen.js?v=36"></script>
+  <script src="meere.js?v=36"></script>
+  <script src="sprachen.js?v=36"></script>
+  <script src="mehrspieler.js?v=36"></script>
+  <script src="spiel.js?v=36"></script>
+  <script src="regionen.js?v=36"></script>
+  <script src="worldle.js?v=36"></script>
 </body>
 </html>

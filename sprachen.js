@@ -6,6 +6,7 @@
 const TEXTE = {
 
   de: {
+    appTipp: '📲 Als App: in Safari unten auf <b>Teilen</b> ⬆️ tippen, dann <b>„Zum Home-Bildschirm“</b>.',
     waehleSpiel: 'Wähle ein Spiel:',
     spielKategorien: { lernen: '📚 Lernen', laender: '🌍 Länder-Quiz', flaggen: '🚩 Flaggen', hauptstaedte: '🏛️ Hauptstädte & Regionen', meere: '🌊 Meere & Ozeane' },
     kurz: {
@@ -157,6 +158,7 @@ const TEXTE = {
   },
 
   en: {
+    appTipp: '📲 As an app: in Safari tap <b>Share</b> ⬆️, then <b>“Add to Home Screen”</b>.',
     waehleSpiel: 'Pick a game:',
     spielKategorien: { lernen: '📚 Learn', laender: '🌍 Country quiz', flaggen: '🚩 Flags', hauptstaedte: '🏛️ Capitals & regions', meere: '🌊 Seas & oceans' },
     kurz: {
@@ -308,6 +310,7 @@ const TEXTE = {
   },
 
   fr: {
+    appTipp: '📲 En appli : dans Safari, touche <b>Partager</b> ⬆️, puis <b>« Sur l’écran d’accueil »</b>.',
     waehleSpiel: 'Choisis un jeu :',
     spielKategorien: { lernen: '📚 Apprendre', laender: '🌍 Quiz des pays', flaggen: '🚩 Drapeaux', hauptstaedte: '🏛️ Capitales et régions', meere: '🌊 Mers et océans' },
     kurz: {
@@ -459,6 +462,7 @@ const TEXTE = {
   },
 
   ar: {
+    appTipp: '📲 كتطبيق: في Safari اضغط على <b>مشاركة</b> ⬆️ ثم <b>«إضافة إلى الشاشة الرئيسية»</b>.',
     waehleSpiel: 'اختر لعبة:',
     spielKategorien: { lernen: '📚 تعلّم', laender: '🌍 مسابقة الدول', flaggen: '🚩 الأعلام', hauptstaedte: '🏛️ العواصم والمناطق', meere: '🌊 البحار والمحيطات' },
     kurz: {

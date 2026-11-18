@@ -912,6 +912,17 @@ body:has(#fenster:not(.versteckt)) :is(#aufgabe, #leiste, #ton-knopf, #menue-kno
 }
 
 /* --- Startseite --- */
+#app-tipp {
+  margin: 10px 0 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px !important;
+  line-height: 1.45;
+  text-align: start;
+  background: rgba(43, 140, 255, 0.15);
+  border: 1px solid rgba(43, 140, 255, 0.4);
+}
+
 .kopf {
   display: flex;
   align-items: center;
