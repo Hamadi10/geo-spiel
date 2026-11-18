@@ -1,0 +1,1505 @@
+/* ===== Grundeinstellungen ===== */
+body {
+  margin: 0;
+  background: black;
+  overflow: hidden;
+  font-family: Arial, sans-serif;
+  color: white;
+}
+
+/* ===== Der Globus füllt immer den ganzen Bildschirm ===== */
+#globus {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+/* ===== Obere Leiste (Runde + Punkte) ===== */
+#leiste {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 18px;
+  z-index: 10;
+}
+
+#leiste span {
+  background: rgba(0, 0, 0, 0.6);
+  padding: 8px 16px;
+  border-radius: 20px;
+}
+
+/* ===== Aufgabe ("Finde: ...") ===== */
+#aufgabe {
+  position: absolute;
+  top: 70px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  padding: 14px 28px;
+  border-radius: 14px;
+  font-size: 24px;
+  text-align: center;
+  z-index: 10;
+}
+
+#aufgabe.richtig { background: rgba(30, 160, 70, 0.9); }
+#aufgabe.falsch  { background: rgba(200, 40, 40, 0.9); }
+
+/* ===== Start- und Ende-Fenster ===== */
+#fenster {
+  position: absolute;
+  width: 85%;
+  box-sizing: border-box;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(10, 20, 40, 0.92);
+  padding: 30px 40px;
+  border-radius: 20px;
+  text-align: center;
+  max-width: 420px;
+  z-index: 20;
+  box-shadow: 0 0 40px rgba(0, 150, 255, 0.4);
+}
+
+#fenster p {
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+/* Die Kontinent-Knöpfe im Startfenster */
+#gebiet-auswahl {
+  display: grid;
+  grid-template-columns: 1fr 1fr;   /* zwei Spalten */
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.gebiet-knopf {
+  font-size: 17px;
+  padding: 12px 10px;
+  border: none;
+  border-radius: 14px;
+  background: #2b8cff;
+  color: white;
+  cursor: pointer;
+}
+
+.gebiet-knopf:hover {
+  background: #1a6fd6;
+}
+
+/* Der "Ganze Welt"-Knopf geht über beide Spalten */
+.gebiet-knopf.welt {
+  grid-column: span 2;
+  background: #1fa85a;
+}
+
+.gebiet-knopf.welt:hover {
+  background: #178a49;
+}
+
+/* ===== Sprach-Knöpfe ===== */
+#sprach-auswahl {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.sprach-knopf {
+  font-size: 14px;
+  padding: 6px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+/* Die gerade gewählte Sprache ist hervorgehoben */
+.sprach-knopf.aktiv {
+  background: white;
+  color: #0a1428;
+  font-weight: bold;
+}
+
+/* ===== Modus-Knöpfe (Lernmodus / Profi-Modus) ===== */
+#modus-auswahl {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.modus-knopf {
+  flex: 1;
+  font-size: 16px;
+  padding: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 14px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+.modus-knopf.aktiv[data-modus="lernen"] {
+  background: #1fa85a;
+  border-color: #1fa85a;
+}
+
+.modus-knopf.aktiv[data-modus="profi"] {
+  background: #e8761c;
+  border-color: #e8761c;
+}
+
+#modus-info {
+  font-size: 14px !important;
+  opacity: 0.8;
+  margin: 8px 0 0 0;
+}
+
+/* ===== Aufgeben-Knopf (nur im Profi-Modus während des Spiels) ===== */
+#aufgeben-knopf {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 17px;
+  padding: 12px 24px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#aufgeben-knopf:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Spiel-Auswahl ===== */
+#gebiet-frage {
+  font-weight: bold;
+  margin: 15px 0 0 0;
+}
+
+/* ===== Antwort-Knöpfe ("Welches Land ist das?") ===== */
+#antworten {
+  position: fixed;
+  bottom: 95px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 560px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  z-index: 10;
+}
+
+.antwort-knopf {
+  font-size: 18px;
+  padding: 14px 10px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  border-radius: 14px;
+  background: rgba(10, 20, 40, 0.85);
+  color: white;
+  cursor: pointer;
+}
+
+.antwort-knopf:hover:not(:disabled) {
+  background: rgba(43, 140, 255, 0.6);
+}
+
+.antwort-knopf.richtig {
+  background: rgba(40, 200, 90, 0.95);
+  border-color: rgb(40, 200, 90);
+}
+
+.antwort-knopf.falsch {
+  background: rgba(230, 50, 50, 0.95);
+  border-color: rgb(230, 50, 50);
+}
+
+.antwort-knopf:disabled {
+  cursor: default;
+}
+
+/* ===== Flagge in der Aufgaben-Box (Flaggen-Quiz) ===== */
+#aufgabe img.flagge.klein {
+  height: 34px;
+  margin: 0 6px 0 0;
+  vertical-align: middle;
+}
+
+#aufgabe img.flagge {
+  height: 80px;
+  border-radius: 6px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.6);
+  margin-bottom: 8px;
+}
+
+/* ===== Ton-Knopf (unten links, bei Arabisch unten rechts) ===== */
+#ton-knopf {
+  position: fixed;
+  bottom: 25px;
+  inset-inline-start: 20px;   /* "Anfang der Zeile": links, bei Arabisch rechts */
+  width: 54px;
+  height: 54px;
+  font-size: 26px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  cursor: pointer;
+  z-index: 30;
+}
+
+#ton-knopf:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+/* ===== Karteikarten ===== */
+#karte {
+  position: fixed;
+  top: 50%;
+  inset-inline-end: 40px;          /* rechts (bei Arabisch links) neben dem Globus */
+  transform: translateY(-50%);
+  width: min(88vw, 360px);
+  z-index: 15;
+  perspective: 1200px;             /* für den 3D-Umdreh-Effekt */
+}
+
+#karte-innen {
+  position: relative;
+  height: 400px;
+  transition: transform 0.6s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+/* Umgedreht = um 180 Grad gedreht → man sieht die Rückseite */
+#karte-innen.umgedreht {
+  transform: rotateY(180deg);
+}
+
+.karte-seite {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;     /* die Rückseite einer Seite ist unsichtbar */
+  -webkit-backface-visibility: hidden;
+  border-radius: 18px;
+  background: rgba(10, 20, 40, 0.94);
+  box-shadow: 0 0 30px rgba(0, 150, 255, 0.35);
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.karte-seite.hinten {
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+  overflow-y: auto;
+}
+
+#karte-flagge {
+  width: 85%;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+}
+
+#karte-hinweis {
+  opacity: 0.7;
+  font-size: 15px;
+  margin-top: 25px;
+}
+
+#karte-kopf {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+#karte-flagge-klein {
+  height: 34px;
+  border-radius: 4px;
+}
+
+#karte-name {
+  margin: 0;
+  font-size: 22px;
+}
+
+#karte-infos {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+
+#karte-infos td {
+  padding: 7px 4px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  vertical-align: top;
+}
+
+/* linke Spalte (Bezeichnung) etwas blasser */
+#karte-infos td:first-child {
+  opacity: 0.7;
+  padding-inline-end: 12px;
+  white-space: nowrap;
+}
+
+#karten-steuerung {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.karten-knopf {
+  width: 48px;
+  height: 48px;
+  font-size: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  cursor: pointer;
+}
+
+.karten-knopf:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#karte-zaehler {
+  min-width: 70px;
+  text-align: center;
+  font-size: 17px;
+  background: rgba(0, 0, 0, 0.6);
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+/* Kleine Bildschirme (Handy): Karte unten in der Mitte */
+@media (max-width: 800px) {
+  #karte {
+    top: auto;
+    bottom: 15px;
+    inset-inline-end: auto;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #karte-innen {
+    height: 340px;
+  }
+}
+
+/* ===== Entdecken: Menü-Knopf und Land-Anzeige ===== */
+#menue-knopf {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 17px;
+  padding: 12px 26px;
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 30px;
+  background: rgba(0, 0, 0, 0.7);
+  color: white;
+  cursor: pointer;
+  z-index: 10;
+}
+
+#menue-knopf:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+#aufgabe .entdeckt-name {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+#aufgabe .entdeckt-info {
+  font-size: 17px;
+  opacity: 0.85;
+}
+
+/* ===== Startfenster scrollbar, falls es zu lang wird ===== */
+#fenster {
+  max-height: 88vh;
+  overflow-y: auto;
+}
+
+/* ===== Regionen & Gruppen: Auswahl im Startfenster ===== */
+.gruppen-kategorie {
+  margin: 14px 0 6px 0;
+  font-weight: bold;
+  text-align: start;
+}
+
+.gruppen-knoepfe {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.gruppe-knopf {
+  font-size: 14px;
+  padding: 7px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 20px;
+  background: rgba(123, 77, 255, 0.35);
+  color: white;
+  cursor: pointer;
+}
+
+.gruppe-knopf:hover {
+  background: rgba(123, 77, 255, 0.8);
+}
+
+/* ===== Regionen & Gruppen: Info-Tafel ===== */
+#gruppen-tafel {
+  position: fixed;
+  top: 50%;
+  inset-inline-end: 30px;
+  transform: translateY(-50%);
+  width: min(88vw, 370px);
+  max-height: 80vh;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: 18px 20px;
+  border-radius: 18px;
+  background: rgba(10, 20, 40, 0.94);
+  box-shadow: 0 0 30px rgba(160, 90, 255, 0.4);
+  z-index: 15;
+}
+
+#gt-titel {
+  margin: 0;
+  font-size: 22px;
+}
+
+#gt-anzahl {
+  opacity: 0.7;
+  margin-top: 4px;
+}
+
+#gt-info, #gt-fakt {
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+#gt-fakt {
+  background: rgba(255, 212, 0, 0.12);
+  border-radius: 10px;
+  padding: 8px 10px;
+}
+
+#gt-dazu {
+  font-weight: bold;
+  margin: 10px 0 6px 0;
+}
+
+#gt-liste {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mitglied-knopf {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 16px;
+  background: rgba(160, 90, 255, 0.25);
+  color: white;
+  cursor: pointer;
+}
+
+.mitglied-knopf img {
+  height: 14px;
+  border-radius: 2px;
+}
+
+.mitglied-knopf.aktiv {
+  background: rgba(0, 170, 255, 0.8);
+}
+
+/* Handy: Tafel unten, damit der Globus sichtbar bleibt */
+@media (max-width: 800px) {
+  #gruppen-tafel {
+    top: auto;
+    bottom: 90px;
+    inset-inline-end: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    max-height: 42vh;
+  }
+}
+
+/* Meere-Knöpfe im Startfenster: blau statt lila */
+.gruppe-knopf.meer-knopf {
+  background: rgba(0, 140, 255, 0.35);
+}
+
+.gruppe-knopf.meer-knopf:hover {
+  background: rgba(0, 140, 255, 0.8);
+}
+
+/* ===== Bundesländer & Regionen: Länderauswahl ===== */
+.land-knopf img {
+  height: 13px;
+  border-radius: 2px;
+  vertical-align: middle;
+}
+
+.gruppe-knopf.aktiv {
+  background: #2b8cff;
+  border-color: white;
+  font-weight: bold;
+}
+
+#land-liste {
+  width: 100%;
+  margin-top: 8px;
+  font-size: 15px;
+  padding: 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: rgba(10, 20, 40, 0.9);
+  color: white;
+}
+
+/* ===== Stadtnamen neben den Punkten (Bundesländer & Regionen, Lernmodus) ===== */
+/* Der Globus-Bereich bleibt immer "links nach rechts" – sonst rutschen
+   bei Arabisch die Stadtnamen aus dem Bild (der Text selbst bleibt arabisch) */
+#globus {
+  direction: ltr;
+}
+
+.stadt-anker {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;   /* Namen sollen Klicks auf den Globus nicht blockieren */
+}
+
+.stadt-name {
+  position: absolute;
+  unicode-bidi: plaintext;   /* arabische Namen richtig herum anzeigen */
+  left: 6px;              /* direkt rechts neben dem Punkt */
+  top: -7px;
+  font-size: 11px;
+  line-height: 14px;
+  white-space: nowrap;
+  color: white;
+  text-shadow: 0 0 3px black, 0 0 3px black;   /* gut lesbar auf jedem Hintergrund */
+  pointer-events: none;
+}
+
+.stadt-name.hauptstadt {
+  color: #ffd400;
+  font-weight: bold;
+}
+
+/* ===== Mehrspieler ===== */
+#mp-wahl {
+  display: flex;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.mp-knopf.aktiv {
+  background: #7b4dff !important;
+  border-color: #7b4dff !important;
+}
+
+#mp-einstellungen {
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 14px;
+  padding: 4px 12px 12px 12px;
+  margin-top: 8px;
+}
+
+.mp-namen {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.mp-namen input {
+  font-size: 15px;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: 2px solid;
+  background: rgba(10, 20, 40, 0.9);
+  color: white;
+  min-width: 0;
+}
+
+/* Leiste oben: Runde, wer ist dran, Punkte */
+#mp-leiste {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  z-index: 12;
+  font-size: 16px;
+}
+
+#mp-leiste > span {
+  background: rgba(0, 0, 0, 0.65);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
+#mp-dran {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+#mp-sekunden:empty {
+  display: none;
+}
+
+#mp-tafel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.mp-chip {
+  background: rgba(0, 0, 0, 0.65);
+  border: 2px solid;
+  border-radius: 16px;
+  padding: 3px 10px;
+  font-size: 14px;
+  opacity: 0.75;
+}
+
+.mp-chip.aktiv {
+  opacity: 1;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.mp-punkt {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  margin-inline-end: 5px;
+  vertical-align: middle;
+}
+
+/* Bei Mehrspieler die Aufgabe etwas tiefer, damit sie nicht unter der Leiste liegt */
+/* (die Höhe der Aufgabe passt spiel.js automatisch an die Leisten oben an) */
+
+/* Zeitbalken ganz oben */
+#mp-zeit {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 6px;
+  width: 100%;
+  background: #2ecc71;
+  z-index: 13;
+  transition: width 0.1s linear;
+}
+
+#mp-zeit.knapp {
+  background: #ff4d4d;
+}
+
+/* Siegertreppchen */
+.mp-ergebnis {
+  text-align: start;
+  margin: 10px 0;
+}
+
+.mp-rang {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  margin-bottom: 6px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.07);
+  font-size: 17px;
+}
+
+.mp-medaille {
+  font-size: 24px;
+  min-width: 32px;
+}
+
+.mp-rang-name {
+  flex: 1;
+}
+
+/* ===== Umriss eines Landes (Form-Spiele) ===== */
+.form-bild svg.form {
+  display: block;
+  height: 120px;
+  width: auto;
+  max-width: 260px;
+  margin: 0 auto 8px;
+  fill: #f2f5fa;
+  filter: drop-shadow(0 0 6px rgba(0, 0, 0, 0.6));
+}
+
+/* ===== Worldle: Schilder auf dem Globus ===== */
+.wl-anker {
+  position: relative;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.wl-schild {
+  position: absolute;
+  transform: translate(-50%, -50%);
+  unicode-bidi: plaintext;
+  white-space: nowrap;
+  font-size: 12px;
+  font-weight: bold;
+  padding: 2px 7px;
+  border-radius: 6px;
+  color: white;
+  background: rgba(20, 25, 40, 0.88);
+}
+
+.wl-schild.ziel     { background: rgba(0, 110, 200, 0.95); }
+.wl-schild.gefunden { background: rgba(25, 140, 60, 0.95); }
+.wl-schild.verpasst { background: rgba(220, 120, 0, 0.95); }
+.wl-schild.stadt    { transform: translate(8px, -50%); }   /* Stadtname rechts neben dem Punkt */
+
+#aufgabe small {
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+/* Eingabefeld unten, damit man den Globus in der Mitte sieht (Vorschläge öffnen nach oben) */
+#namens-box.unten,
+#mp-leiste:not(.versteckt) ~ #namens-box.unten {
+  top: auto;
+  bottom: 95px;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+#namens-box.unten #namens-vorschlaege {
+  margin: 0 0 4px 0;
+}
+
+/* ===== Flagge → Name → Karte: Eingabefeld ===== */
+#namens-box {
+  position: fixed;
+  top: 270px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(90vw, 420px);
+  z-index: 11;
+}
+
+#mp-leiste:not(.versteckt) ~ #namens-box {
+  top: 310px;
+}
+
+#namens-zeile {
+  display: flex;
+  gap: 8px;
+}
+
+#namens-eingabe {
+  flex: 1;
+  min-width: 0;
+  font-size: 18px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 2px solid #2b8cff;
+  background: rgba(10, 20, 40, 0.95);
+  color: white;
+}
+
+#namens-knopf {
+  font-size: 17px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 12px;
+  background: #1fa85a;
+  color: white;
+  cursor: pointer;
+}
+
+#namens-vorschlaege {
+  margin-top: 4px;
+  background: rgba(10, 20, 40, 0.97);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.vorschlag {
+  padding: 10px 14px;
+  font-size: 16px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.vorschlag:hover, .vorschlag.markiert {
+  background: rgba(43, 140, 255, 0.5);
+}
+
+
+/* =====================================================
+   NEUES MENÜ: Startseite, Spiel-Seite, Ergebnis-Seite
+   ===================================================== */
+
+/* Solange das Menü offen ist: Spiel-Anzeigen ausblenden (auch kein Durchschimmern) */
+body:has(#fenster:not(.versteckt)) :is(#aufgabe, #leiste, #ton-knopf, #menue-knopf, #aufgeben-knopf,
+  #antworten, #namens-box, #mp-zeit, #mp-leiste, #gruppen-tafel, #karte) {
+  display: none !important;
+}
+
+#fenster {
+  width: min(94vw, 580px);
+  max-width: none;
+  max-height: 92vh;
+  max-height: 92dvh;
+  overflow-y: auto;
+  padding: 22px 24px 26px;
+  border: 1px solid rgba(120, 180, 255, 0.18);
+  background: rgba(8, 16, 34, 0.94);
+  box-shadow: 0 10px 50px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 150, 255, 0.25);
+  scrollbar-width: thin;
+}
+
+#fenster h1 {
+  margin: 6px 0 6px;
+  font-size: 26px;
+  line-height: 1.2;
+}
+
+/* Sanftes Einblenden beim Seitenwechsel */
+.seite {
+  animation: einblenden 0.25s ease-out;
+}
+
+@keyframes einblenden {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+/* --- Startseite --- */
+.kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+#start-titel {
+  font-size: 28px !important;
+  margin: 0 !important;
+}
+
+.kopf-knoepfe {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#sprach-auswahl {
+  gap: 4px;
+  flex-wrap: nowrap;
+}
+
+.sprach-knopf {
+  min-width: 38px;
+  padding: 6px 8px;
+  font-weight: bold;
+}
+
+.rund-knopf {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  background: transparent;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  padding: 0;
+}
+
+#start-untertitel {
+  text-align: start;
+  margin: 14px 0 0;
+  opacity: 0.8;
+}
+
+#lade-hinweis {
+  margin: 8px 0 0;
+  font-size: 15px !important;
+  color: #ffd400;
+}
+
+.kategorie-titel {
+  text-align: start;
+  font-size: 17px;
+  margin: 18px 0 8px;
+}
+
+.karten-raster {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.spiel-karte {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  text-align: start;
+  padding: 11px 12px;
+  min-height: 62px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-inline-start: 4px solid var(--kat-farbe, #2b8cff);
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.1s;
+}
+
+.spiel-karte:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.spiel-karte:active {
+  transform: scale(0.98);
+}
+
+.sk-name {
+  font-size: 15px;
+  font-weight: bold;
+  line-height: 1.25;
+}
+
+.sk-kurz {
+  font-size: 12.5px;
+  opacity: 0.7;
+  line-height: 1.3;
+}
+
+.sk-best {
+  font-size: 12px;
+  color: #ffd400;
+}
+
+/* Jede Kategorie hat ihre Farbe */
+.kat-lernen       { --kat-farbe: #1fa85a; }
+.kat-laender      { --kat-farbe: #2b8cff; }
+.kat-flaggen      { --kat-farbe: #e8761c; }
+.kat-hauptstaedte { --kat-farbe: #a05aff; }
+.kat-meere        { --kat-farbe: #00b8d9; }
+
+/* --- Spiel-Seite --- */
+.klein-knopf {
+  display: block;
+  font-size: 15px;
+  padding: 7px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 20px;
+  background: transparent;
+  color: white;
+  cursor: pointer;
+}
+
+#zurueck-knopf {
+  margin: 0 auto 0 0;
+}
+
+[dir="rtl"] #zurueck-knopf {
+  margin: 0 0 0 auto;
+}
+
+/* Kontinente: zum Auswählen (das gewählte ist hell) */
+#gebiet-auswahl {
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.gebiet-knopf,
+.gebiet-knopf.welt {
+  font-size: 16px;
+  padding: 11px 8px;
+  background: rgba(43, 140, 255, 0.12);
+  border: 2px solid rgba(43, 140, 255, 0.35);
+}
+
+.gebiet-knopf:hover,
+.gebiet-knopf.welt:hover {
+  background: rgba(43, 140, 255, 0.3);
+}
+
+.gebiet-knopf.aktiv,
+.gebiet-knopf.aktiv:hover {
+  background: #2b8cff;
+  border-color: #8cc4ff;
+  font-weight: bold;
+}
+
+#bestwert {
+  margin: 14px 0 0;
+  color: #ffd400;
+  font-size: 16px !important;
+}
+
+#los-knopf {
+  width: 100%;
+  margin-top: 16px;
+  padding: 15px;
+  font-size: 21px;
+  font-weight: bold;
+  border: none;
+  border-radius: 16px;
+  background: #1fa85a;
+  color: white;
+  cursor: pointer;
+  box-shadow: 0 4px 18px rgba(31, 168, 90, 0.4);
+}
+
+#los-knopf:hover {
+  background: #23bd66;
+}
+
+#los-knopf:disabled {
+  opacity: 0.55;
+  cursor: wait;
+  box-shadow: none;
+}
+
+/* --- Ergebnis-Seite --- */
+#ende-text p {
+  margin: 8px 0;
+}
+
+.rekord {
+  font-size: 20px !important;
+  font-weight: bold;
+  color: #ffd400;
+}
+
+.klein-info {
+  font-size: 14px !important;
+  opacity: 0.8;
+}
+
+.ende-fehler-titel {
+  font-weight: bold;
+  margin: 14px 0 8px;
+}
+
+.fehler-liste {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.fehler-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  padding: 5px 10px;
+  border-radius: 16px;
+  background: rgba(230, 50, 50, 0.22);
+  border: 1px solid rgba(230, 50, 50, 0.5);
+}
+
+.fehler-chip img {
+  height: 14px;
+  border-radius: 2px;
+}
+
+#ende-knoepfe {
+  display: grid;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.ende-knopf {
+  font-size: 17px;
+  padding: 12px;
+  border-radius: 14px;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: white;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+.ende-knopf:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ende-knopf.haupt {
+  background: #1fa85a;
+  border-color: #1fa85a;
+  font-weight: bold;
+}
+
+.ende-knopf.haupt:hover {
+  background: #23bd66;
+}
+
+/* --- 🏠-Knopf: in jedem Spiel oben links (bei Arabisch oben rechts) --- */
+#menue-knopf {
+  top: 12px;
+  bottom: auto;
+  left: auto;
+  inset-inline-start: 12px;
+  transform: none;
+  width: 46px;
+  height: 46px;
+  padding: 0;
+  font-size: 22px;
+  border-radius: 50%;
+  z-index: 16;
+}
+
+#leiste,
+#mp-leiste {
+  padding-inline-start: 52px;
+}
+
+/* --- Nachfrage "Spiel beenden?" --- */
+#frage-box {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.55);
+}
+
+#frage-innen {
+  width: min(88vw, 360px);
+  padding: 20px;
+  border-radius: 18px;
+  text-align: center;
+  background: rgba(8, 16, 34, 0.97);
+  border: 1px solid rgba(120, 180, 255, 0.25);
+  animation: einblenden 0.2s ease-out;
+}
+
+#frage-text {
+  font-size: 18px;
+  line-height: 1.4;
+  margin: 0 0 14px;
+}
+
+#frage-knoepfe {
+  display: grid;
+  gap: 8px;
+}
+
+/* --- Kleine Bildschirme (Handy) --- */
+@media (max-width: 600px) {
+  #fenster {
+    padding: 16px 14px 20px;
+    border-radius: 18px;
+  }
+  #start-titel {
+    font-size: 23px !important;
+  }
+  #fenster h1 {
+    font-size: 22px;
+  }
+  #fenster p {
+    font-size: 15px;
+  }
+  .spiel-karte {
+    padding: 9px 10px;
+  }
+  .sk-name {
+    font-size: 14px;
+  }
+}
+
+/* Runde Punkte für sehr kleine Länder (Monaco, Malta, Karibik-Inseln …) */
+.klein-punkt {
+  position: absolute;
+  width: 11px;
+  height: 11px;
+  margin: -7px 0 0 -7px;            /* genau auf die Mitte des Landes */
+  border-radius: 50%;
+  background: var(--farbe, #00b4ff);
+  border: 2px solid white;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.7);
+  pointer-events: none;
+}
+
+.klein-punkt.klickbar {
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.klein-punkt.klickbar:hover {
+  transform: scale(1.35);
+}
+
+.klein-punkt.aktiv {
+  background: #ffd400;
+  transform: scale(1.35);
+}
+
+/* Name neben dem Punkt: beim Drüberfahren oder wenn angetippt */
+.kp-name {
+  display: none;
+  position: absolute;
+  left: 15px;
+  top: -6px;
+  white-space: nowrap;
+  unicode-bidi: plaintext;
+  font-size: 11px;
+  font-weight: bold;
+  color: white;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(8, 16, 34, 0.9);
+}
+
+.klein-punkt.klickbar:hover .kp-name,
+.klein-punkt.aktiv .kp-name {
+  display: block;
+}
+
+
+/* =====================================================
+   HANDY & TABLET
+   ===================================================== */
+
+/* Ränder fürs iPhone: Notch oben, Home-Balken unten; --tastatur = Höhe der Bildschirm-Tastatur */
+:root {
+  --oben-sicher: env(safe-area-inset-top, 0px);
+  --unten-sicher: env(safe-area-inset-bottom, 0px);
+  --tastatur: 0px;
+}
+
+body {
+  -webkit-tap-highlight-color: transparent;   /* kein grauer Kasten beim Antippen */
+  -webkit-user-select: none;                  /* Text nicht aus Versehen markieren */
+  user-select: none;
+  -webkit-touch-callout: none;
+  overscroll-behavior: none;
+}
+
+input, select, textarea {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+button {
+  touch-action: manipulation;                 /* kein Zoomen bei schnellem Doppel-Tippen */
+}
+
+#globus {
+  height: 100dvh;
+  touch-action: none;                         /* Finger drehen und zoomen nur den Globus */
+}
+
+/* Die Aufgabe oben: so breit wie nötig (vorher nur halb so breit wie der Bildschirm) */
+#aufgabe {
+  width: max-content;
+  max-width: min(92vw, 640px);
+  box-sizing: border-box;
+}
+
+#leiste      { top: calc(15px + var(--oben-sicher)); }
+#mp-leiste   { top: calc(10px + var(--oben-sicher)); }
+#mp-zeit     { top: var(--oben-sicher); }
+#menue-knopf { top: calc(12px + var(--oben-sicher)); }
+#ton-knopf   { bottom: calc(25px + var(--unten-sicher)); }
+#aufgeben-knopf { bottom: calc(30px + var(--unten-sicher)); }
+#antworten   { bottom: calc(95px + var(--unten-sicher)); }
+
+#namens-box.unten,
+#mp-leiste:not(.versteckt) ~ #namens-box.unten {
+  bottom: calc(95px + var(--unten-sicher) + var(--tastatur));
+}
+
+/* --- Handy hochkant --- */
+@media (max-width: 600px) {
+  #aufgabe {
+    font-size: 19px;
+    padding: 10px 16px;
+    border-radius: 12px;
+  }
+  #aufgabe img.flagge {
+    height: 62px;
+  }
+  .form-bild svg.form {
+    height: 96px;
+  }
+  #aufgabe .entdeckt-name {
+    font-size: 24px;
+  }
+  #aufgabe .entdeckt-info {
+    font-size: 15px;
+  }
+  #aufgabe small {
+    font-size: 13px;
+  }
+  #leiste {
+    font-size: 15px;
+  }
+  #leiste span {
+    padding: 6px 12px;
+  }
+  #antworten {
+    width: 94%;
+    gap: 8px;
+  }
+  .antwort-knopf {
+    font-size: 16px;
+    padding: 13px 8px;
+  }
+  /* Eingabefeld immer unten (über der Tastatur), Vorschläge öffnen nach oben */
+  #namens-box,
+  #mp-leiste:not(.versteckt) ~ #namens-box {
+    top: auto;
+    bottom: calc(95px + var(--unten-sicher) + var(--tastatur));
+    width: 94vw;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #namens-vorschlaege {
+    margin: 0 0 4px 0 !important;
+  }
+  #namens-eingabe {
+    font-size: 17px;            /* ab 16px zoomt das iPhone beim Antippen nicht hinein */
+  }
+  .vorschlag {
+    padding: 9px 12px;
+    font-size: 15px;
+  }
+  #karte {
+    bottom: calc(88px + var(--unten-sicher));
+  }
+  #karte-innen {
+    height: 300px;
+  }
+  #gruppen-tafel {
+    bottom: calc(88px + var(--unten-sicher));
+    max-height: 38vh;
+    padding: 14px;
+  }
+  #mp-leiste {
+    font-size: 14px;
+  }
+  #mp-dran {
+    font-size: 16px;
+  }
+  .mp-chip {
+    font-size: 12px;
+  }
+  .mp-namen input,
+  #land-liste {
+    font-size: 16px;
+  }
+}
+
+/* --- Handy quer (wenig Höhe) --- */
+@media (max-height: 500px) {
+  #aufgabe {
+    font-size: 16px;
+    padding: 6px 14px;
+  }
+  #aufgabe img.flagge {
+    height: 40px;
+    margin-bottom: 2px;
+  }
+  .form-bild svg.form {
+    height: 58px;
+    margin-bottom: 2px;
+  }
+  #aufgabe .entdeckt-name {
+    font-size: 20px;
+  }
+  #antworten {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    width: calc(100% - 150px);
+    max-width: 820px;
+    bottom: calc(12px + var(--unten-sicher));
+  }
+  .antwort-knopf {
+    font-size: 14px;
+    padding: 9px 6px;
+  }
+  #ton-knopf {
+    bottom: calc(10px + var(--unten-sicher));
+    width: 44px;
+    height: 44px;
+    font-size: 20px;
+  }
+  #aufgeben-knopf {
+    left: auto;
+    right: 16px;
+    transform: none;
+    bottom: calc(10px + var(--unten-sicher));
+    font-size: 14px;
+    padding: 8px 14px;
+  }
+  #namens-box,
+  #namens-box.unten,
+  #mp-leiste:not(.versteckt) ~ #namens-box {
+    top: auto;
+    bottom: calc(10px + var(--unten-sicher) + var(--tastatur));
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  #namens-vorschlaege {
+    margin: 0 0 4px 0 !important;
+    max-height: 45vh;
+    overflow-y: auto;
+  }
+  #karte-innen {
+    height: calc(100dvh - 90px);
+  }
+  #gruppen-tafel {
+    max-height: 80vh;
+  }
+}
+
+/* Versteckt etwas (z. B. das Fenster während des Spiels) */
+.versteckt {
+  display: none !important;
+}

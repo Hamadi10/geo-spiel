@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Geo-Spiel</title>
+
+  <!-- Das Aussehen steht in einer eigenen Datei -->
+  <link rel="stylesheet" href="style.css?v=35">
+
+  <!-- Das Globus-Werkzeug aus dem Internet -->
+  <script src="https://unpkg.com/globe.gl"></script>
+</head>
+<body>
+
+  <!-- Obere Leiste: Runde und Punkte -->
+  <div id="leiste">
+    <span id="runde"></span>
+    <span id="punkte"></span>
+  </div>
+
+  <!-- Mehrspieler: wer ist dran + Punkte aller Spieler -->
+  <div id="mp-leiste" class="versteckt">
+    <span id="mp-runde"></span>
+    <span id="mp-dran"></span>
+    <span id="mp-sekunden"></span>
+    <div id="mp-tafel"></div>
+  </div>
+  <!-- Mehrspieler: Zeitbalken ganz oben -->
+  <div id="mp-zeit" class="versteckt"></div>
+
+  <!-- Die Aufgabe, z. B. "Finde: Brasilien" -->
+  <div id="aufgabe"></div>
+
+  <!-- Spiel "Flagge → Name → Karte": Eingabefeld mit Vorschlägen -->
+  <div id="namens-box" class="versteckt">
+    <div id="namens-zeile">
+      <input id="namens-eingabe" type="text" autocomplete="off">
+      <button id="namens-knopf"></button>
+    </div>
+    <div id="namens-vorschlaege"></div>
+  </div>
+
+  <!-- Spiel "Welches Land ist das?": hier erscheinen die 4 Antwort-Knöpfe -->
+  <div id="antworten" class="versteckt"></div>
+
+  <!-- Karteikarte: vorne Flagge, hinten Infos zum Land -->
+  <div id="karte" class="versteckt">
+    <div id="karte-innen">
+      <div class="karte-seite vorne">
+        <img id="karte-flagge" alt="">
+        <p id="karte-hinweis"></p>
+      </div>
+      <div class="karte-seite hinten">
+        <div id="karte-kopf">
+          <img id="karte-flagge-klein" alt="">
+          <h2 id="karte-name"></h2>
+        </div>
+        <table id="karte-infos"></table>
+      </div>
+    </div>
+    <!-- Knöpfe unter der Karte -->
+    <div id="karten-steuerung">
+      <button id="karte-zurueck" class="karten-knopf">◀</button>
+      <span id="karte-zaehler"></span>
+      <button id="karte-weiter" class="karten-knopf">▶</button>
+      <button id="karte-beenden" class="karten-knopf">✖</button>
+    </div>
+  </div>
+
+  <!-- Regionen & Gruppen: Info-Tafel -->
+  <div id="gruppen-tafel" class="versteckt">
+    <h2 id="gt-titel"></h2>
+    <div id="gt-anzahl"></div>
+    <p id="gt-info"></p>
+    <p id="gt-fakt"></p>
+    <div id="gt-dazu"></div>
+    <div id="gt-liste"></div>
+  </div>
+
+  <!-- 🏠 Zurück zur Startseite (in jedem Spiel oben links) -->
+  <button id="menue-knopf">🏠</button>
+
+  <!-- Ton an/aus (unten links) -->
+  <button id="ton-knopf">🔊</button>
+
+  <!-- Profi-Modus: Aufgeben-Knopf (unten in der Mitte) -->
+  <button id="aufgeben-knopf" class="versteckt"></button>
+
+  <!-- Der Globus -->
+  <div id="globus"></div>
+
+  <!-- Das Menü: drei Seiten (Startseite, Spiel-Einstellungen, Ergebnis) -->
+  <div id="fenster">
+
+    <!-- Seite 1: Startseite mit allen Spielen, nach Themen sortiert -->
+    <div id="seite-start" class="seite">
+      <div class="kopf">
+        <h1 id="start-titel">🌍 Geo-Spiel</h1>
+        <div class="kopf-knoepfe">
+          <!-- Sprach-Knöpfe. "data-sprache" sagt dem Code, welche Sprache gemeint ist -->
+          <div id="sprach-auswahl">
+            <button class="sprach-knopf" data-sprache="de" title="Deutsch">DE</button>
+            <button class="sprach-knopf" data-sprache="en" title="English">EN</button>
+            <button class="sprach-knopf" data-sprache="fr" title="Français">FR</button>
+            <button class="sprach-knopf" data-sprache="ar" title="العربية">ع</button>
+          </div>
+          <button id="ton-menue" class="rund-knopf">🔊</button>
+        </div>
+      </div>
+      <p id="start-untertitel"></p>
+      <p id="lade-hinweis"></p>
+      <!-- Die Spiel-Kärtchen baut spiel.js -->
+      <div id="spiel-kategorien"></div>
+    </div>
+
+    <!-- Seite 2: ein Spiel ist gewählt → Einstellungen und Start -->
+    <div id="seite-spiel" class="seite versteckt">
+      <button id="zurueck-knopf" class="klein-knopf"></button>
+      <h1 id="fenster-titel"></h1>
+      <p id="fenster-text"></p>
+
+      <!-- Alleine oder Mehrspieler (Einstellungen baut mehrspieler.js) -->
+      <div id="mp-wahl"></div>
+      <div id="mp-einstellungen" class="versteckt"></div>
+
+      <!-- Schwierigkeit: Lernmodus oder Profi-Modus -->
+      <div id="modus-auswahl">
+        <button class="modus-knopf" data-modus="lernen"></button>
+        <button class="modus-knopf" data-modus="profi"></button>
+      </div>
+      <p id="modus-info"></p>
+
+      <!-- Gruppen, Meere, Regionen: eigene Auswahl (wird von spiel.js gefüllt) -->
+      <div id="gruppen-auswahl" class="versteckt"></div>
+
+      <p id="gebiet-frage"></p>
+
+      <!-- Die Kontinent-Knöpfe: wählen das Gebiet aus (gestartet wird mit "Los") -->
+      <div id="gebiet-auswahl">
+        <button class="gebiet-knopf welt" data-gebiet="Welt">🌍 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="Europe">🏰 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="Africa">🦁 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="Asia">🏯 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="North America">🗽 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="South America">🦜 <span></span></button>
+        <button class="gebiet-knopf" data-gebiet="Oceania">🦘 <span></span></button>
+      </div>
+
+      <p id="bestwert"></p>
+      <button id="los-knopf"></button>
+    </div>
+
+    <!-- Seite 3: Ergebnis nach dem Spiel -->
+    <div id="seite-ende" class="seite versteckt">
+      <h1 id="ende-titel"></h1>
+      <div id="ende-text"></div>
+      <div id="ende-fehler"></div>
+      <div id="ende-knoepfe">
+        <button id="nochmal-knopf" class="ende-knopf haupt"></button>
+        <button id="fehler-knopf" class="ende-knopf"></button>
+        <button id="einstellungen-knopf" class="ende-knopf"></button>
+        <button id="startseite-knopf" class="ende-knopf"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nachfrage: "Spiel abbrechen?" -->
+  <div id="frage-box" class="versteckt">
+    <div id="frage-innen">
+      <p id="frage-text"></p>
+      <div id="frage-knoepfe">
+        <button id="frage-nein" class="ende-knopf haupt"></button>
+        <button id="frage-ja" class="ende-knopf"></button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Erst die Texte, dann die Spiel-Logik -->
+  <script src="gruppen.js?v=35"></script>
+  <script src="meere.js?v=35"></script>
+  <script src="sprachen.js?v=35"></script>
+  <script src="mehrspieler.js?v=35"></script>
+  <script src="spiel.js?v=35"></script>
+  <script src="regionen.js?v=35"></script>
+  <script src="worldle.js?v=35"></script>
+</body>
+</html>
